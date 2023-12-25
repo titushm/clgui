@@ -38,48 +38,42 @@ class ButtonList:
 		
 	def render(self, print_func, state):
 		for i, button in enumerate(self.buttons):
-			if (type(state) == int and state == 0):
-				print_func(colorama.Fore.WHITE + button.text + colorama.Style.RESET_ALL)
-			elif (type(state) == int and state == 1):
-				print_func(colorama.Fore.BLUE + button.text + colorama.Style.RESET_ALL)
-			elif (state == False):
-				print_func(colorama.Fore.LIGHTBLACK_EX + button.text + colorama.Style.RESET_ALL)
-			else:
-				if (i == self.selected_index):
-					print_func(colorama.Back.WHITE + colorama.Fore.BLACK + button.text + colorama.Style.RESET_ALL)
-				else:
-					print_func(button.text)
-			
-
+			button.render(print_func, state, i == self.selected_index)
 
 	def handleInput(self, key):
 		initial_selected_index = self.selected_index
 		match (key.name):
 			case "up":
-				if (self.selected_index == 0):
-					self.selected_index = len(self.buttons) - 1
-				else:
-					self.selected_index -= 1
-				
+				self.selected_index = (self.selected_index - 1) % len(self.buttons)
 			case "down":
-				if (self.selected_index == len(self.buttons) - 1):
-					self.selected_index = 0
-				else:
-					self.selected_index += 1
-
-			case "enter":
-				self.buttons[self.selected_index].click()
-
+				self.selected_index = (self.selected_index + 1) % len(self.buttons)
 			case _:
-				return False
+				for i, button in enumerate(self.buttons):
+					if (i == self.selected_index):
+						return button.handleInput(key)
 		return initial_selected_index != self.selected_index
 
 	
 class Button:
-	def __init__(self, text, callback=None):
-		self.text = text
+	def __init__(self, label, callback=None):
+		self.label = label
 		self.callback = callback
-	
-	def click(self):
-		if self.callback:
-			self.callback()
+
+	def render(self, print_func, state, isSelected=True):
+		match (state):
+			case 1:
+				print_func(colorama.Fore.BLUE + self.label + colorama.Style.RESET_ALL)
+			case 2:
+				print_func(colorama.Fore.LIGHTBLACK_EX + self.label + colorama.Style.RESET_ALL)
+			case _:
+				style = colorama.Fore.WHITE
+				if (isSelected and state == 3):
+					style = colorama.Back.WHITE + colorama.Fore.BLACK
+				print_func(style + self.label + colorama.Style.RESET_ALL)
+				
+	def handleInput(self, key):
+		match (key.name):
+			case "enter":
+				if(self.callback):
+					self.callback()
+		return False

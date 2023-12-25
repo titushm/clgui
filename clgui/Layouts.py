@@ -13,42 +13,28 @@ class VStack:
 		os.system("cls")
 		for child in self.children:
 			if (self.previewing):
-				param = 0
-				if (child == self.children[self.selected_index]):
-					param = 1
-				child.render(print, param)
-
+				state = 1 if self.children[self.selected_index] == child else 0
 			else:
-				child.render(print, child == self.children[self.selected_index])
+				state = 3 if self.children[self.selected_index] == child else 2
+			child.render(print, state)
 
 	def handleKeyPress(self, key):
+		should_render = True
 		if (key.event_type != "down"):
 			return
-
 		if (self.previewing):
 			match (key.name):
 				case "up":
-					if (self.selected_index == 0):
-						self.selected_index = len(self.children) - 1
-					else:
-						self.selected_index -= 1
-					
+					self.selected_index = (self.selected_index - 1) % len(self.children)
 				case "down":
-					if (self.selected_index == len(self.children) - 1):
-						self.selected_index = 0
-					else:
-						self.selected_index += 1
-
+					self.selected_index = (self.selected_index + 1) % len(self.children)
 				case "enter":
 					self.previewing = False
-
-			self.render()
-
 		else:
 			if (key.name == "esc"):
 				self.previewing = True
-				self.render()
-				return
-
-			if (self.children[self.selected_index].handleInput(key)):
-				self.render()
+			else:
+				should_render = self.children[self.selected_index].handleInput(key)
+		if not should_render:
+			return
+		self.render()
