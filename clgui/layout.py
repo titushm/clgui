@@ -1,4 +1,4 @@
-import os, keyboard
+import os
 
 class VStack:
 	def __init__(self):

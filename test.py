@@ -19,9 +19,11 @@ button_list.addButton(button1) # A single button can also be added
 vertical_layout.add(button_list) # Add button list to the layout
 vertical_layout.add(button) # You can also directly add a button to the layout
 main.show() # Show the main GUI
+print("nits")
 time.sleep(3)
-main.destroy() # Close the gui
-
+print("its destroying time")
+main.destroy() # Destroy the main GUI
+print("DESTROYED")
 
 
 

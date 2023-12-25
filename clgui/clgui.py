@@ -1,17 +1,27 @@
-import colorama, keyboard, threading
+import colorama, keyboard, threading, time
 colorama.init()
 
 class GUI:
 	def __init__(self, layout):
 		self.layout = layout
-
+		self.thread = None
+		self.stop_flag = False
+	
+	def keyboardWait(self):
+		while not self.stop_flag:
+			if (keyboard.is_pressed("control+c")):
+				return
+			time.sleep(0.01)
 	def show(self):
 		self.layout.render()
 		keyboard.hook(self.layout.handleKeyPress)
+		self.thread = threading.Thread(target=self.keyboardWait)
+		self.thread.start()
 
 	def destroy(self):
-		keyboard.unhook_all()
-
+		print("s")
+		keyboard.unhook(self.layout.handleKeyPress)
+		self.stop_flag = True
 
 class ButtonList:
 	def __init__(self):
