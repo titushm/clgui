@@ -13,7 +13,7 @@ Command-Line-GUI
 ```py
 import clgui
 
-vertical_layout = clgui.Layouts.VStack() # Currently the only layout is VStack, more are planned
+vertical_layout = clgui.layout.VStack() # Currently the only layout is VStack, more are planned
 main = clgui.GUI(layout=vertical_layout) # Initialize a new GUI
 
 # Elements
@@ -24,7 +24,7 @@ def handleClick(data):
 	print(data)
 # Methods
 button1 = clgui.Button("Hello", handleClick, ["data1", "data2"]) # Create a new button with an event handler when enter is pressed on it
-button2 = clgui.Button("World", lambda: print("World"), "extra data") # Create a new button with an event handler when enter is pressed on it
+button2 = clgui.Button("World") # Create a new button with an event handler when enter is pressed on it
 button_list.addButtons([button1, button2]) # Add buttons to the button list
 
 button_list.addButton(button1) # A single button can also be added

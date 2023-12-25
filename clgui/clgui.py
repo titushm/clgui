@@ -1,28 +1,17 @@
-import colorama, keyboard, sys
+import colorama, keyboard, threading
 colorama.init()
 
-
 class GUI:
-	created = False
 	def __init__(self, layout):
-		if (self.created):
-			raise Exception("A GUI has already been created.")
 		self.layout = layout
-		self.input_thread = None
-		self.created = True
-	
+
 	def show(self):
-		keyboard.hook(self.layout.handleKeyPress)
 		self.layout.render()
-		try:
-			keyboard.wait()
-		except KeyboardInterrupt:
-			pass
-		self.destroy()
+		keyboard.hook(self.layout.handleKeyPress)
 
 	def destroy(self):
 		keyboard.unhook_all()
-		sys.exit()
+
 
 class ButtonList:
 	def __init__(self):

@@ -1,4 +1,4 @@
-import os
+import os, keyboard
 
 class VStack:
 	def __init__(self):
@@ -30,6 +30,8 @@ class VStack:
 					self.selected_index = (self.selected_index + 1) % len(self.children)
 				case "enter":
 					self.previewing = False
+				case _:
+					should_render = self.children[self.selected_index].handleInput(key)
 		else:
 			if (key.name == "esc"):
 				self.previewing = True
