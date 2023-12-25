@@ -1,6 +1,6 @@
 [project]
 name = "clgui"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   { name="TitusHM", email="dev.titushm@gmail.com" },
 ]
