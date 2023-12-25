@@ -12,6 +12,8 @@ class GUI:
 			if (keyboard.is_pressed("control+c")):
 				return
 			time.sleep(0.01)
+		time.sleep(0.4) # this is needed so that it doesnt clear the screen after it is destroyed
+
 	def show(self):
 		self.layout.render()
 		keyboard.hook(self.layout.handleKeyPress)
@@ -19,9 +21,9 @@ class GUI:
 		self.thread.start()
 
 	def destroy(self):
+		os.system("cls")
 		keyboard.unhook(self.layout.handleKeyPress)
 		self.stop_flag = True
-		os.system("cls")
 
 class ButtonList:
 	def __init__(self):
