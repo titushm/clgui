@@ -55,9 +55,10 @@ class ButtonList:
 
 	
 class Button:
-	def __init__(self, label, callback=None):
+	def __init__(self, label, callback=None, data=None):
 		self.label = label
 		self.callback = callback
+		self.data = data
 
 	def render(self, print_func, state, isSelected=True):
 		match (state):
@@ -75,5 +76,5 @@ class Button:
 		match (key.name):
 			case "enter":
 				if(self.callback):
-					self.callback()
+					self.callback(self.data)
 		return False
