@@ -19,7 +19,6 @@ class GUI:
 		self.thread.start()
 
 	def destroy(self):
-		print("s")
 		keyboard.unhook(self.layout.handleKeyPress)
 		self.stop_flag = True
 
