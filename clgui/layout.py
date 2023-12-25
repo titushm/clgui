@@ -33,7 +33,7 @@ class VStack:
 				case _:
 					should_render = self.children[self.selected_index].handleInput(key)
 		else:
-			if (key.name == "esc"):
+			if (key.name == "esc" and len(self.children) > 1):
 				self.previewing = True
 			else:
 				should_render = self.children[self.selected_index].handleInput(key)

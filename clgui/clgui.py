@@ -1,4 +1,4 @@
-import colorama, keyboard, threading, time
+import colorama, keyboard, threading, time, os
 colorama.init()
 
 class GUI:
@@ -21,6 +21,7 @@ class GUI:
 	def destroy(self):
 		keyboard.unhook(self.layout.handleKeyPress)
 		self.stop_flag = True
+		os.system("cls")
 
 class ButtonList:
 	def __init__(self):

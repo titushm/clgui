@@ -3,7 +3,7 @@ with open('README.md', 'r') as f:
     long_description = f.read()
 
 
-VERSION = '0.0.8' 
+VERSION = '0.0.9' 
 DESCRIPTION = 'A command-line GUI for Python'
 
 # Setting up
