@@ -7,26 +7,30 @@ class GUI:
 		self.thread = None
 		self.stop_flag = False
 	
-	def keyboardWait(self):
+	def _keyboardWait(self):
 		while not self.stop_flag:
 			if (keyboard.is_pressed("control+c")):
 				return
 			time.sleep(0.01)
 
 	def show(self):
-		self.layout.render()
-		keyboard.hook(self.layout.handleKeyPress)
-		self.thread = threading.Thread(target=self.keyboardWait)
+		self.layout._render()
+		keyboard.hook(self.layout._handleKeyPress)
+		self.thread = threading.Thread(target=self._keyboardWait)
 		self.thread.start()
 
 	def destroy(self):
-		keyboard.unhook(self.layout.handleKeyPress)
+		keyboard.unhook(self.layout._handleKeyPress)
 		self.stop_flag = True
 
 class ButtonList:
 	def __init__(self):
 		self.buttons = []
+		self.title = None
 		self.selected_index = 0
+
+	def setTitle(self, title):
+		self.title = title
 
 	def addButtons(self, buttons):
 		for button in buttons:
@@ -35,11 +39,13 @@ class ButtonList:
 	def addButton(self, button):
 		self.buttons.append(button)
 		
-	def render(self, print_func, state):
+	def _render(self, print_func, state):
+		if (self.title):
+			print_func(colorama.Fore.YELLOW + self.title + colorama.Style.RESET_ALL)
 		for i, button in enumerate(self.buttons):
-			button.render(print_func, state, i == self.selected_index)
+			button._render(print_func, state, i == self.selected_index)
 
-	def handleInput(self, key):
+	def _handleInput(self, key):
 		initial_selected_index = self.selected_index
 		match (key.name):
 			case "up":
@@ -49,7 +55,7 @@ class ButtonList:
 			case _:
 				for i, button in enumerate(self.buttons):
 					if (i == self.selected_index):
-						return button.handleInput(key)
+						return button._handleInput(key)
 		return initial_selected_index != self.selected_index
 
 class Button:
@@ -58,7 +64,7 @@ class Button:
 		self.callback = callback
 		self.data = data
 
-	def render(self, print_func, state, isSelected=True):
+	def _render(self, print_func, state, isSelected=True):
 		match (state):
 			case 1:
 				print_func(colorama.Fore.BLUE + self.label + colorama.Style.RESET_ALL)
@@ -70,7 +76,7 @@ class Button:
 					style = colorama.Back.WHITE + colorama.Fore.BLACK
 				print_func(style + self.label + colorama.Style.RESET_ALL)
 				
-	def handleInput(self, key):
+	def _handleInput(self, key):
 		match (key.name):
 			case "enter":
 				if(self.callback):

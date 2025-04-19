@@ -9,16 +9,17 @@ class VStack:
 	def add(self, child):
 		self.children.append(child)
 	
-	def render(self):
+	def _render(self):
 		os.system("cls")
 		for child in self.children:
 			if (self.previewing):
 				state = 1 if self.children[self.selected_index] == child else 0
 			else:
 				state = 3 if self.children[self.selected_index] == child else 2
-			child.render(print, state)
+			
+			child._render(print, state)
 
-	def handleKeyPress(self, key):
+	def _handleKeyPress(self, key):
 		should_render = True
 		if (key.event_type != "down"):
 			return
@@ -31,12 +32,12 @@ class VStack:
 				case "enter":
 					self.previewing = False
 				case _:
-					should_render = self.children[self.selected_index].handleInput(key)
+					should_render = self.children[self.selected_index]._handleInput(key)
 		else:
 			if (key.name == "esc" and len(self.children) > 1):
 				self.previewing = True
 			else:
-				should_render = self.children[self.selected_index].handleInput(key)
+				should_render = self.children[self.selected_index]._handleInput(key)
 		if not should_render:
 			return
-		self.render()
+		self._render()
