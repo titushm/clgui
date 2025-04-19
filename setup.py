@@ -11,7 +11,7 @@ setup(
         name="clgui", 
         version=VERSION,
         author="TitusHM",
-        author_email="dev.titushm@gmail.com",
+        author_email="contact@titushm.dev",
         description=DESCRIPTION,
         long_description=long_description,
         packages=find_packages(),
