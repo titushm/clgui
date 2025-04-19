@@ -1,4 +1,4 @@
-import colorama, keyboard, threading, time, os
+import colorama, keyboard, threading, time
 colorama.init()
 
 class GUI:
@@ -52,7 +52,6 @@ class ButtonList:
 						return button.handleInput(key)
 		return initial_selected_index != self.selected_index
 
-	
 class Button:
 	def __init__(self, label, callback=None, data=None):
 		self.label = label
@@ -77,3 +76,4 @@ class Button:
 				if(self.callback):
 					self.callback(self.data)
 		return False
+	

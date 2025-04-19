@@ -1,3 +1,4 @@
-dist
-clgui.egg-info
-build
+/dist
+/clgui.egg-info
+/build
+/clgui/__pycache__

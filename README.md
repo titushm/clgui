@@ -2,6 +2,9 @@
 
 Command-Line-GUI
 
+# How to use
+Up and down arrow keys control the selected element.
+Escape will enter preview mode which will select an element inside the layout to switch between lists.
 # Docs
 
 ## Install clgui
@@ -23,10 +26,8 @@ button = clgui.Button("click me") # Buttons do not need event handlers but can h
 def handleClick(data):
 	print(data)
 # Methods
-button1 = clgui.Button("Hello", handleClick, ["data1", "data2"]) # Create a new button with an event handler when enter is pressed on it
-button2 = clgui.Button("World") # Create a new button with an event handler when enter is pressed on it
-button_list.addButtons([button1, button2]) # Add buttons to the button list
-
+button1 = clgui.Button("Hello", handleClick, ["data1", "data2"]) # Create a new button with an event handler when enter is pressed on it, third agrument is data that will be passed to the callback function.
+button_list.addButtons([button1, button]) # Add buttons to the button list
 button_list.addButton(button1) # A single button can also be added
 
 vertical_layout.add(button_list) # Add button list to the layout
